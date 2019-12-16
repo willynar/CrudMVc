@@ -1,0 +1,36 @@
+﻿@*@model DataTable*@
+@model List<Usuario>
+@{
+    ViewData["Title"] = "Visualizar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<table class="table table-responsive">
+    <tr>
+        <th>nombre</th>
+        <th>apellido</th>
+        <th>correo</th>
+        <th>contraseña</th>
+        <th>acciones</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+
+        <tr>
+            <td>@item.nombre</td>
+            <td>@item.apellido</td>
+            <td>@item.correo</td>
+            <td>@item.contraseña</td>
+            <td>
+                @Html.ActionLink("eliminar", "Delete", "Home", new { id = item.nombre })
+                @*<a asp-controller="Home" asp-action="Delete" asp-route-id="@item.nombre">eliminar</a>*@
+            </td>
+        </tr>
+
+    }
+</table>
+@*@foreach (DataRow row in Model.Rows)
+    {
+
+        <h1>@row["nombre"]</h1>
+    }*@
+

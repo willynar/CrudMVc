@@ -1,0 +1,2 @@
+# CrudMVc
+ crud .netcore mvc
