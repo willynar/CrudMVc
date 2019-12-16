@@ -9,19 +9,63 @@
 
     @Html.LabelFor(d => d.apellido)
     @Html.TextBoxFor(d => d.apellido, "", new { @class = "form-control" })
-    
+
     @Html.LabelFor(d => d.correo)
-    @Html.TextBoxFor(d => d.correo, "", new { @class = "form-control"})
+    @Html.TextBoxFor(d => d.correo, "", new { @class = "form-control" })
 
     @Html.LabelFor(d => d.contraseña)
-    @Html.TextBoxFor(d => d.contraseña, "", new { @class = "form-control"})
+    @Html.TextBoxFor(d => d.contraseña, "", new { @class = "form-control" })
 
     <input type="submit" name="guardarUsuario" value="guardar" />
 
 </form>
 
-@section Scripts{ 
+@section Scripts{
     @*<script asp-append-version="true" type="text/javascript">
+        $('#formRegisterProcuct').submit(function (e) {
+            e.preventDefault();
+                var URL = "@Url.Action("actualizarCarrito", "Producto")";
+                var form = $(this);
+                try {
+                    fetch(URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        //body: JSON.stringify(datos)
+                        body: form.serialize(),
+                    }).then(function (response) {
+                        if (response.ok) {
+                            response.json().then(function (data) {
+                                switch (data.result) {
+                                    case true:
+                                        document.location.href = "@Url.Action("DetallesCarrito","Producto")";
+                                        break;
+                                    case false:
+                                        $("div.message").remove();
+                                        $("#alertBody").after("<div class='message'>" + data.mensaje + "</div>");
+                                        $('#modalAlerta').modal('show');
+                                        //Hacemos desaparecer el modal
+                                        setTimeout(function () { $('#modalAlerta').modal('hide'); }, 9000);
+                                        break;
+                                    default:
+                                        $("#formDetalleCarrito").html(data);
+                                        break;
+
+                                }
+                            });
+                        } else {
+                            $("div.message").remove();
+                            $("#alertBody").after("<div class='message'>Error de conexion.</div>");
+                            $('#modalAlerta').modal('show');
+                            //Hacemos desaparecer el modal
+                            setTimeout(function () { $('#modalAlerta').modal('hide'); }, 9000);
+                        }
+                    });
+                }
+                catch (error) {
+                    console.error('Error:', error);
+                }
+
+        });
         $('#formRegisterProcuct').submit(function (e) {
             e.preventDefault();
             var URL = "@Url.Action("GuardarProducto", "Producto")";
